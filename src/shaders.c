@@ -6,8 +6,8 @@
 
 #include "shader.h"
 
-const char *vertex_shader_path = "/home/txm/src/opengl/shaders/shader.vert";
-const char *fragment_shader_path = "/home/txm/src/opengl/shaders/shader.frag";
+const char *vertex_shader_path = "/home/txm/src/opengl/shaders/shaders.vert";
+const char *fragment_shader_path = "/home/txm/src/opengl/shaders/shaders.frag";
 
 void framebuffer_size_callback(GLFWwindow *w, int width, int height);
 void process_input(GLFWwindow *w);
