@@ -7,3 +7,9 @@ hmm yes, a triangle
 
 ![triangle](attachments/triangle.png)
 
+# Shaders
+A spinning triangle. Shader handling is now done in the shader module.
+
+![shaders](attachments/shaders.png)
+It spins. You either need to run it, or just take my word for it.
+
