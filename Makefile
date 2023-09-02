@@ -8,9 +8,9 @@ OBJECT_DIR = $(BUILD_DIR)/obj
 
 CFLAGS = -Wall $(addprefix "-I", $(INCLUDE_DIR))
 CXXFLAGS = -Wall $(addprefix "-I", $(INCLUDE_DIR))
-LDFLAGS = -lglfw -lX11 -lGL
+LDFLAGS = -lglfw -lX11 -lGL -lm
 
-COMMON_SOURCES = glad.c
+COMMON_SOURCES = glad.c shader.c util.c
 COMMON_OBJECT_NAMES = $(patsubst %.c, %.o, $(COMMON_SOURCES))
 COMMON_OBJECTS = $(addprefix $(OBJECT_DIR)/, $(COMMON_OBJECT_NAMES))
 
@@ -23,6 +23,11 @@ $(OBJECT_DIR)%.o: $(SOURCE_DIR)%.c
 	@$(CC) $(CFLAGS) -c $^ -o $@
 
 triangle: $(COMMON_OBJECTS) $(OBJECT_DIR)/triangle.o
+	@mkdir -p $(BUILD_DIR)
+	@echo "Linking $@..."
+	@$(CC) $(LDFLAGS) -o $(BUILD_DIR)/$@ $^
+
+shaders: $(COMMON_OBJECTS) $(OBJECT_DIR)/shaders.o
 	@mkdir -p $(BUILD_DIR)
 	@echo "Linking $@..."
 	@$(CC) $(LDFLAGS) -o $(BUILD_DIR)/$@ $^
