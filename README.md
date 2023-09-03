@@ -2,6 +2,8 @@
 
 Just messing around with OpenGL. Learning how to use it and make fun stuff.
 
+PS: The green outline around the screenshots are from DWM. They can stay for now
+
 # Triangle
 hmm yes, a triangle
 
