@@ -16,5 +16,9 @@ It spins. You either need to run it, or just take my word for it.
 # Textures
 Displaying an image using textures.. and adding color overlay.
 
-![textures](attachments/textures.png)
+![textures1](attachments/textures1.png)
+![textures2](attachments/textures2.png)
+
+Super basic, but I think that the stretch effect looks sweet.
+![texture_stretch](attachments/texture_clamp.png)
 

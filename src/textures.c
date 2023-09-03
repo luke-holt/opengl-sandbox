@@ -40,6 +40,7 @@ main(void)
 	}
 
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+	glfwSetWindowOpacity(window, 0.5);
 
 	/**************************************************/
 	/* Shader */
@@ -51,11 +52,11 @@ main(void)
 	/* Data */
 
 	float vertices[] = {
-	/*   points               colors               texture coords */
-		 0.9f,  0.9f,  0.0f,  1.0f,  0.0f,  0.0f,  1.0f,  1.0f,
+	/*   points (x,y,z)       colors (r,g,b)       texture coords (s,t) */
+		 0.9f,  0.9f,  0.0f,  1.0f,  0.0f,  0.0f,  1.0f,  2.5f,
 		 0.9f, -0.9f,  0.0f,  0.0f,  1.0f,  0.0f,  1.0f,  0.0f,
 		-0.9f, -0.9f,  0.0f,  0.0f,  0.0f,  1.0f,  0.0f,  0.0f,
-		-0.9f,  0.9f,  0.0f,  1.0f,  1.0f,  0.0f,  0.0f,  1.0f,
+		-0.9f,  0.9f,  0.0f,  1.0f,  1.0f,  0.0f,  0.0f,  2.5f,
 	};
 
 	/* One row of the vertices array contains 8 floats */
@@ -107,14 +108,15 @@ main(void)
 	unsigned int texture;
 	glGenTextures(1, &texture);
 	glBindTexture(GL_TEXTURE_2D, texture);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	/* Load image */
 	int width, height, nchannels;
 	unsigned char *image_data;
+	stbi_set_flip_vertically_on_load_thread(true);
 	image_data = stbi_load(texture_filename, &width, &height, &nchannels, 0);
 	if (NULL == image_data) {
 		die("Failed to load image.\n");
@@ -134,16 +136,16 @@ main(void)
 	while (!glfwWindowShouldClose(window)) {
 		process_input(window);
 
-		glClearColor((23.0f/255.0f), (16.0f/255.0f), (43.0f/255.0f), 0.1f);
-		glClear(GL_COLOR_BUFFER_BIT);
+		// glClearColor((23.0f/255.0f), (16.0f/255.0f), (43.0f/255.0f), 0.1f);
+		// glClear(GL_COLOR_BUFFER_BIT);
+
+		glBindVertexArray(VAO);
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
 		glBindTexture(GL_TEXTURE_2D, texture);
 
 		/* activate shader */
 		shader_use(shader_program);
-
-		glBindVertexArray(VAO);
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
