@@ -18,7 +18,7 @@ COMMON_SOURCES = glad.c shader.c util.c
 COMMON_OBJECT_NAMES = $(patsubst %.c, %.o, $(COMMON_SOURCES))
 COMMON_OBJECTS = $(addprefix $(OBJECT_DIR)/, $(COMMON_OBJECT_NAMES))
 
-TARGETS = triangle shaders textures
+TARGETS = triangle shaders textures cube
 TARGET_PATHS = $(addprefix $(BUILD_DIR)/, $(TARGETS))
 
 # Compiling
@@ -38,6 +38,11 @@ shaders: $(COMMON_OBJECTS) $(OBJECT_DIR)/shaders.o
 	@$(CC) $(LDFLAGS) -o $(BUILD_DIR)/$@ $^
 
 textures: $(COMMON_OBJECTS) $(OBJECT_DIR)/textures.o
+	@mkdir -p $(BUILD_DIR)
+	@echo "Linking $@..."
+	@$(CC) $(LDFLAGS) -o $(BUILD_DIR)/$@ $^
+
+cube: $(COMMON_OBJECTS) $(OBJECT_DIR)/cube.o
 	@mkdir -p $(BUILD_DIR)
 	@echo "Linking $@..."
 	@$(CC) $(LDFLAGS) -o $(BUILD_DIR)/$@ $^
